@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.temptation.dao.IUserDao">
+ <select id="findByUsername" parameterType="string" resultType="EUser">
+  SELECT * FROM userinfo WHERE username=#{username}
+ </select>
+ <select id="findByUserid" parameterType="int" resultType="EUser">
+  SELECT * FROM userinfo WHERE userid=#{userid}
+  </select>
+  
+ <select id="getAllUsers" resultMap="getUsersRM" resultType="EUser">
+  SELECT userid, username, password,age,updateTime
+    FROM userinfo
+</select>
+<resultMap id="getUsersRM" type="EUser">
+  <id property="userid" column="userid"/>
+  <result property="username" column="username"/>
+  <result property="password" column="password"/>
+  <result property="userage" column="age"/>
+  <result property="updateTime" column="updateTime"/>
+</resultMap>
+
+<insert id="insertUser" useGeneratedKeys="true"
+    keyProperty="userid">
+  insert into userinfo username,password,userage,updateTime)
+  values (#{username},#{password},#{userage},NOW())
+</insert>
+
+<update id="updateUser">
+  update Author set
+    username = #{username},
+    password = #{password},
+    userage = #{userage},
+    updateTime = NOW()
+  where userid = #{userid}
+</update>
+
+<delete id="deleteUser">
+  delete from userinfo where userid = #{userid}
+</delete>
+</mapper>
